@@ -5,20 +5,20 @@ type FinancialPlan struct {
 	Projection projection
 }
 
-type projection []int64
+type projection []float64
 
 type PlanConfig struct {
-	IntervalType   IntervalType
-	IntervalLength uint32
+	IntervalType   IntervalType `yaml:"interval_type"`
+	IntervalLength uint32       `yaml:"interval_length"`
 }
 
-type IntervalType uint8
+type IntervalType string
 
 const (
-	Days IntervalType = iota
-	Weeks
-	Months
-	Years
+	Days   IntervalType = "days"
+	Weeks  IntervalType = "weeks"
+	Months IntervalType = "months"
+	Years  IntervalType = "years"
 )
 
 func DefaultConfig() *PlanConfig {
