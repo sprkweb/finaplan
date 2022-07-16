@@ -1,11 +1,17 @@
 package finaplan
 
+import (
+	"errors"
+	"fmt"
+)
+
 type FinancialPlan struct {
 	Config     *PlanConfig
-	Projection projection
+	Projection Projection
 }
 
-type projection []float64
+type ProjectionUnit float64
+type Projection []ProjectionUnit
 
 type PlanConfig struct {
 	IntervalType   IntervalType `yaml:"interval_type"`
@@ -26,4 +32,19 @@ func DefaultConfig() *PlanConfig {
 		IntervalType:   Days,
 		IntervalLength: 1,
 	}
+}
+
+func (c *PlanConfig) Validate() error {
+	if c.IntervalLength < 1 {
+		return errors.New("IntervalLength must be 1 or bigger")
+	}
+	switch c.IntervalType {
+	case Days:
+	case Weeks:
+	case Months:
+	case Years:
+	default:
+		return fmt.Errorf("incorrect IntervalType: %s", c.IntervalType)
+	}
+	return nil
 }

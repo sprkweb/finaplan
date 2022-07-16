@@ -1,7 +1,7 @@
 package finaplan
 
 func Init(config *PlanConfig, intervalAmount uint64) *FinancialPlan {
-	projection := make(projection, intervalAmount)
+	projection := make(Projection, intervalAmount)
 	return &FinancialPlan{
 		Config:     config,
 		Projection: projection,
