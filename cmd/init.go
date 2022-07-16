@@ -2,10 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/spf13/cobra"
 	"github.com/sprkweb/finaplan-cli/internal/parser"
 	"github.com/sprkweb/finaplan-cli/pkg/finaplan"
-
-	"github.com/spf13/cobra"
 )
 
 // initCmd represents the init command
@@ -35,10 +34,9 @@ interval_length: 3
 		}, IntervalAmount)
 		planStr, err := parser.PrintPlan(newPlan)
 		if err != nil {
-			cmd.PrintErrln(err)
-		} else {
-			cmd.Println(planStr)
+			panic(err)
 		}
+		fmt.Print(planStr)
 	},
 }
 
