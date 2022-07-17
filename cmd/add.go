@@ -25,22 +25,15 @@ interval_length: 1
 600
 900`,
 	Args: cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: parser.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
 		amount, err := strconv.ParseFloat(args[0], 64)
 		if err != nil {
-			panic(err)
-		}
-
-		plan, err := parser.ParsePlanFromStdin()
-		if err != nil {
-			panic(err)
+			return err
 		}
 
 		plan.Add(finaplan.ProjectionUnit(amount), AddEach, AddStart)
-		if err := parser.PrintPlanToStdout(plan); err != nil {
-			panic(err)
-		}
-	},
+		return nil
+	}),
 }
 
 var AddEach uint64
