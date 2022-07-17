@@ -15,8 +15,9 @@ import (
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Add a certain amount of money to your plan",
-	Long: `Add a certain amount of money to your financial plan (e.g. savings)
+	Long: `Add a certain amount of money to your financial plan (e.g. savings) once or regularly
 
+Example:
 $ finaplan init | finaplan add 300 --each 2
 ---
 interval_type: days
