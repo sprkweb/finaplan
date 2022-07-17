@@ -46,7 +46,7 @@ interval_length: 1
 			panic(err)
 		}
 
-		plan.Add(finaplan.ProjectionUnit(amount), Each, Start)
+		plan.Add(finaplan.ProjectionUnit(amount), AddEach, AddStart)
 		planStr, err := parser.PrintPlan(plan)
 		if err != nil {
 			panic(err)
@@ -55,12 +55,12 @@ interval_length: 1
 	},
 }
 
-var Each uint64
-var Start uint64
+var AddEach uint64
+var AddStart uint64
 
 func init() {
 	rootCmd.AddCommand(addCmd)
-	addCmd.Flags().Uint64Var(&Each, "each", 0, "period; number of intervals after which the same amount is added (0 if you do not want it to repeat)")
-	addCmd.Flags().Uint64Var(&Start, "start", 0, "when do you want to add the amount (0 = at the very beginning of the plan)")
-	//addCmd.Flags().BoolVar(&Exclude, "exclude-start", false, "set this flag if you want to add the amount AFTER the date")
+	addCmd.Flags().Uint64Var(&AddEach, "each", 0, "period; number of intervals after which the same amount is added (0 if you do not want it to repeat)")
+	addCmd.Flags().Uint64Var(&AddStart, "start", 0, "when do you want to add the amount (0 = at the very beginning of the plan)")
+	//addCmd.Flags().BoolVar(&AddExclude, "exclude-start", false, "set this flag if you want to add the amount AFTER the date")
 }
