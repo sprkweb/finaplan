@@ -32,11 +32,9 @@ interval_length: 3
 			IntervalType:   IntervalType(),
 			IntervalLength: IntervalLength,
 		}, IntervalAmount)
-		planStr, err := parser.PrintPlan(newPlan)
-		if err != nil {
+		if err := parser.PrintPlanToStdout(newPlan); err != nil {
 			panic(err)
 		}
-		fmt.Print(planStr)
 	},
 }
 

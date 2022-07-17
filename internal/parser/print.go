@@ -21,6 +21,15 @@ func PrintPlan(p *finaplan.FinancialPlan) (string, error) {
 	return builder.String(), nil
 }
 
+func PrintPlanToStdout(plan *finaplan.FinancialPlan) error {
+	planStr, err := PrintPlan(plan)
+	if err != nil {
+		return err
+	}
+	fmt.Print(planStr)
+	return nil
+}
+
 const ConfigDelimiter = "---\n"
 
 func printConfig(builder *strings.Builder, config *finaplan.PlanConfig) error {

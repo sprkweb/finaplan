@@ -1,10 +1,12 @@
 package parser
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/sprkweb/finaplan-cli/pkg/finaplan"
 	"gopkg.in/yaml.v3"
 	"io"
+	"os"
 	"strings"
 )
 
@@ -28,6 +30,16 @@ func ParsePlan(input string) (*finaplan.FinancialPlan, error) {
 		Config:     config,
 		Projection: *projection,
 	}, nil
+}
+
+func ParsePlanFromStdin() (*finaplan.FinancialPlan, error) {
+	reader := bufio.NewReader(os.Stdin)
+	input, err := io.ReadAll(reader)
+	if err != nil {
+		return nil, err
+	}
+
+	return ParsePlan(string(input))
 }
 
 func parseConfig(input []byte) (*finaplan.PlanConfig, error) {

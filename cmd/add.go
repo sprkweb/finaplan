@@ -1,13 +1,9 @@
 package cmd
 
 import (
-	"bufio"
-	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/sprkweb/finaplan-cli/internal/parser"
 	"github.com/sprkweb/finaplan-cli/pkg/finaplan"
-	"io"
-	"os"
 	"strconv"
 )
 
@@ -35,23 +31,15 @@ interval_length: 1
 			panic(err)
 		}
 
-		reader := bufio.NewReader(os.Stdin)
-		input, err := io.ReadAll(reader)
-		if err != nil {
-			panic(err)
-		}
-
-		plan, err := parser.ParsePlan(string(input))
+		plan, err := parser.ParsePlanFromStdin()
 		if err != nil {
 			panic(err)
 		}
 
 		plan.Add(finaplan.ProjectionUnit(amount), AddEach, AddStart)
-		planStr, err := parser.PrintPlan(plan)
-		if err != nil {
+		if err := parser.PrintPlanToStdout(plan); err != nil {
 			panic(err)
 		}
-		fmt.Println(planStr)
 	},
 }
 
