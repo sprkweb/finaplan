@@ -9,7 +9,7 @@ import (
 
 // investCmd represents the invest command
 var investCmd = &cobra.Command{
-	Use:   "invest",
+	Use:   "invest INTEREST",
 	Short: "Add some interest rate on top of your capital",
 	Long: `Add some interest rate on top of your capital regularly
 
@@ -32,7 +32,7 @@ interval_length: 6
 			panic(err)
 		}
 
-		err = plan.Invest(interest, InvestInterval, InvestStart, InvestCompound)
+		err = plan.Invest(interest, InvestInterval, InvestStart, !InvestSimple)
 		if err != nil {
 			panic(err)
 		}
@@ -42,11 +42,11 @@ interval_length: 6
 
 var InvestInterval uint64
 var InvestStart uint64
-var InvestCompound bool
+var InvestSimple bool
 
 func init() {
 	rootCmd.AddCommand(investCmd)
 	investCmd.Flags().Uint64Var(&InvestInterval, "interval", 1, "period; number of intervals after which the interest is applied")
 	investCmd.Flags().Uint64Var(&InvestStart, "start", 0, "when do you want to start the investments (0 = at the very beginning of the plan)")
-	investCmd.Flags().BoolVar(&InvestCompound, "compound", true, "set this flag if the specified interest is compound (all the interest in reinvested)")
+	investCmd.Flags().BoolVar(&InvestSimple, "simple", false, "set this flag if the specified interest is simple (= not compound, the interest is not reinvested)")
 }

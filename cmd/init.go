@@ -9,12 +9,12 @@ import (
 
 // initCmd represents the init command
 var initCmd = &cobra.Command{
-	Use:   "init",
+	Use:   "init [--each N] [--days | --weeks | --months | --years]",
 	Short: "Initialize an empty plan",
 	Long: `Initialize an empty financial plan
 
 Example:
-Initialize an empty plan for 15 weeks ahead
+Initialize an empty plan for 5 * 3 = 15 weeks ahead
 with the calculation interval of 3 weeks:
 $ finaplan init --each 3 --weeks --intervals 5
 ---

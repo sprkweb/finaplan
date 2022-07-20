@@ -9,7 +9,7 @@ import (
 
 // addCmd represents the add command
 var addCmd = &cobra.Command{
-	Use:   "add",
+	Use:   "add AMOUNT",
 	Short: "Add a certain amount of money to your plan",
 	Long: `Add a certain amount of money to your financial plan (e.g. savings) once or regularly
 
