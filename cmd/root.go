@@ -6,7 +6,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "finaplan-cli",
+	Use:   "finaplan",
 	Short: "CLI for financial planning and calculations",
 	//	Long: ``,
 }
