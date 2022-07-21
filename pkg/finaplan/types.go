@@ -44,7 +44,7 @@ func GetIntervalUnit(t IntervalType) (string, error) {
 
 func DefaultConfig() *PlanConfig {
 	return &PlanConfig{
-		IntervalType:   Days,
+		IntervalType:   Months,
 		IntervalLength: 1,
 	}
 }

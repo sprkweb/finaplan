@@ -47,7 +47,7 @@ func init() {
 
 	defaultConfig := finaplan.DefaultConfig()
 	initCmd.Flags().Uint32Var(&IntervalLength, "each", defaultConfig.IntervalLength, "amount of given units in an interval")
-	initCmd.Flags().Uint64Var(&IntervalAmount, "intervals", 5, "amount of defined intervals to calculate")
+	initCmd.Flags().Uint64Var(&IntervalAmount, "intervals", 36, "amount of defined intervals to calculate")
 
 	getUnitFlag := func(unit string) *bool {
 		description := fmt.Sprintf("set this argument to calculate the plan in %s", unit)
