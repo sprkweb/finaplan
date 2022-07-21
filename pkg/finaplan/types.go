@@ -27,6 +27,21 @@ const (
 	Years  IntervalType = "years"
 )
 
+func GetIntervalUnit(t IntervalType) (string, error) {
+	switch t {
+	case Days:
+		return "day", nil
+	case Weeks:
+		return "week", nil
+	case Months:
+		return "month", nil
+	case Years:
+		return "year", nil
+	default:
+		return "", fmt.Errorf("wrong interval type: %s", t)
+	}
+}
+
 func DefaultConfig() *PlanConfig {
 	return &PlanConfig{
 		IntervalType:   Days,
