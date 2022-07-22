@@ -3,7 +3,7 @@ package parser
 import (
 	"bufio"
 	"fmt"
-	"github.com/sprkweb/finaplan-cli/pkg/finaplan"
+	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
 	"gopkg.in/yaml.v3"
 	"io"
 	"os"

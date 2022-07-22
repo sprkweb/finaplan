@@ -3,3 +3,6 @@ test:
 
 build:
 	go build -o ./finaplan
+
+install:
+	go install

@@ -5,7 +5,7 @@ import (
 	"gopkg.in/yaml.v3"
 	"strings"
 
-	"github.com/sprkweb/finaplan-cli/pkg/finaplan"
+	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
 )
 
 func PrintPlan(p *finaplan.FinancialPlan) (string, error) {

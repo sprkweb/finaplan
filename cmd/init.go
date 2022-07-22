@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/sprkweb/finaplan-cli/internal/parser"
-	"github.com/sprkweb/finaplan-cli/pkg/finaplan"
+	"github.com/sprkweb/finaplan-cli/finaplan/internal/parser"
+	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
 )
 
 // initCmd represents the init command

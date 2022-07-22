@@ -2,7 +2,7 @@ package parser
 
 import (
 	"fmt"
-	"github.com/sprkweb/finaplan-cli/pkg/finaplan"
+	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
 	"testing"
 )
 

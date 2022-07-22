@@ -3,7 +3,7 @@ package parser
 import (
 	"fmt"
 	"github.com/fatih/color"
-	"github.com/sprkweb/finaplan-cli/pkg/finaplan"
+	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
 	"golang.org/x/term"
 	"math"
 	"os"
