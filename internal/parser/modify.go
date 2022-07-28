@@ -8,6 +8,9 @@ import (
 type WrappedFunc func(plan *finaplan.FinancialPlan, args []string) error
 type WrapperFunc func(cmd *cobra.Command, args []string)
 
+// ModifyPlan wraps your command handler function with input / output handlers:
+//
+// it parses financial plan from stdin and then, after your function modifies it, the plan is printed to stdout.
 func ModifyPlan(f WrappedFunc) WrapperFunc {
 	return func(cmd *cobra.Command, args []string) {
 		plan, err := ParsePlanFromStdin()

@@ -32,6 +32,7 @@ type PlanConfig struct {
 
 type IntervalType string
 
+// IntervalType is a type of indivisible units of time measurement in the plan.
 const (
 	Days   IntervalType = "days"
 	Weeks  IntervalType = "weeks"

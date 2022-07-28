@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-// Invest your capital with given `interest` per `intervals` starting from `start`
+// Invest your capital with given `interest` per `intervals` starting after `start` intervals.
 func (p *FinancialPlan) Invest(interest float64, intervals uint64, start uint64, compound bool) error {
 	if int(start) > len(p.Projection)-1 {
 		return nil
