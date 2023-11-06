@@ -3,11 +3,13 @@ package parser
 import (
 	"bufio"
 	"fmt"
-	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
-	"gopkg.in/yaml.v3"
 	"io"
 	"os"
 	"strings"
+
+	"github.com/shopspring/decimal"
+	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
+	"gopkg.in/yaml.v3"
 )
 
 func ParsePlan(input string) (*finaplan.FinancialPlan, error) {
@@ -55,20 +57,22 @@ func parseConfig(input []byte) (*finaplan.PlanConfig, error) {
 
 func parseProjection(input string) (*finaplan.Projection, error) {
 	reader := strings.NewReader(input)
-	var num finaplan.ProjectionUnit
+	var line string
+	var num decimal.Decimal
 	var projection finaplan.Projection
 	i := 0
 	for {
 		i++
-		n, err := fmt.Fscanln(reader, &num)
+		_, err := fmt.Fscanln(reader, &line)
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
 			return nil, fmt.Errorf("got error while parsing plan: %w", err)
 		}
-		if n != 1 {
-			return nil, fmt.Errorf("got 0 items on line %d", i)
+		num, err = decimal.NewFromString(line)
+		if err != nil {
+			return nil, fmt.Errorf("error parsing number: %w", err)
 		}
 		projection = append(projection, num)
 	}

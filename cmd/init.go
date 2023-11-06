@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 	"github.com/sprkweb/finaplan-cli/finaplan/internal/parser"
 	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
@@ -39,7 +40,7 @@ interval_length: 3
 }
 
 var IntervalLength uint32
-var IntervalAmount uint64
+var IntervalAmount uint32
 var IntervalType func() finaplan.IntervalType
 
 func init() {
@@ -47,7 +48,7 @@ func init() {
 
 	defaultConfig := finaplan.DefaultConfig()
 	initCmd.Flags().Uint32Var(&IntervalLength, "each", defaultConfig.IntervalLength, "amount of given units in an interval")
-	initCmd.Flags().Uint64Var(&IntervalAmount, "intervals", 36, "amount of defined intervals to calculate")
+	initCmd.Flags().Uint32Var(&IntervalAmount, "intervals", 36, "amount of defined intervals to calculate")
 
 	getUnitFlag := func(unit string) *bool {
 		description := fmt.Sprintf("set this argument to calculate the plan in %s", unit)

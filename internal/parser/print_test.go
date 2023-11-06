@@ -1,8 +1,9 @@
 package parser
 
 import (
-	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
 	"testing"
+
+	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
 )
 
 func TestPrintPlan(t *testing.T) {
@@ -19,7 +20,7 @@ interval_length: 2
 		IntervalType:   finaplan.Months,
 		IntervalLength: 2,
 	}
-	var intervalAmount uint64 = 4
+	intervalAmount := uint32(4)
 	plan := finaplan.Init(config, intervalAmount)
 
 	result, err := PrintPlan(plan)

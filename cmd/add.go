@@ -1,10 +1,10 @@
 package cmd
 
 import (
+	"github.com/shopspring/decimal"
 	"github.com/spf13/cobra"
 	"github.com/sprkweb/finaplan-cli/finaplan/internal/parser"
 	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
-	"strconv"
 )
 
 // addCmd represents the add command
@@ -26,22 +26,21 @@ interval_length: 1
 900`,
 	Args: cobra.ExactArgs(1),
 	Run: parser.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
-		amount, err := strconv.ParseFloat(args[0], 64)
+		amount, err := decimal.NewFromString(args[0])
 		if err != nil {
 			return err
 		}
 
-		plan.Add(finaplan.ProjectionUnit(amount), AddEach, AddStart)
+		plan.Add(amount, AddEach, AddStart)
 		return nil
 	}),
 }
 
-var AddEach uint64
-var AddStart uint64
+var AddEach uint32
+var AddStart uint32
 
 func init() {
 	rootCmd.AddCommand(addCmd)
-	addCmd.Flags().Uint64Var(&AddEach, "each", 0, "period; number of intervals after which the same amount is added (0 if you do not want it to repeat)")
-	addCmd.Flags().Uint64Var(&AddStart, "start", 0, "when do you want to add the amount (0 = at the very beginning of the plan)")
-	//addCmd.Flags().BoolVar(&AddExclude, "exclude-start", false, "set this flag if you want to add the amount AFTER the date")
+	addCmd.Flags().Uint32Var(&AddEach, "each", 0, "period; number of intervals after which the same amount is added (0 if you do not want it to repeat)")
+	addCmd.Flags().Uint32Var(&AddStart, "start", 0, "when do you want to add the amount (0 = at the very beginning of the plan)")
 }

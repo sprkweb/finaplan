@@ -6,7 +6,7 @@ import (
 )
 
 func TestInit(t *testing.T) {
-	tests := []uint64{5, 123, 0, 1}
+	tests := []uint32{5, 123, 0, 1}
 	var plan *FinancialPlan
 	for _, intervalAmount := range tests {
 		t.Run(fmt.Sprintf("Init %d intervals", intervalAmount), func(t *testing.T) {

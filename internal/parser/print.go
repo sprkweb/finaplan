@@ -2,10 +2,10 @@ package parser
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v3"
 	"strings"
 
 	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
+	"gopkg.in/yaml.v3"
 )
 
 func PrintPlan(p *finaplan.FinancialPlan) (string, error) {
@@ -16,7 +16,8 @@ func PrintPlan(p *finaplan.FinancialPlan) (string, error) {
 	}
 
 	for _, v := range p.Projection {
-		builder.WriteString(fmt.Sprintf("%v\n", v))
+		builder.WriteString(v.String())
+		builder.WriteRune('\n')
 	}
 	return builder.String(), nil
 }

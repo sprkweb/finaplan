@@ -3,6 +3,8 @@ package finaplan
 import (
 	"errors"
 	"fmt"
+
+	"github.com/shopspring/decimal"
 )
 
 // FinancialPlan is the main structure with information about the financial plan.
@@ -14,8 +16,7 @@ type FinancialPlan struct {
 	Projection Projection
 }
 
-type ProjectionUnit float64
-type Projection []ProjectionUnit
+type Projection []decimal.Decimal
 
 // PlanConfig is configuration of your plan
 type PlanConfig struct {

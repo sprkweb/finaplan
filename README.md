@@ -36,18 +36,18 @@ and you want to know how much money you will have in the end.
 
     $ finaplan init --intervals 36 --months | \ # plan for 3 years = 36 months
         finaplan add 1000 --each 1 | \          # save 1000$ each month
-        finaplan invest 1.1 --interval 12 | \   # invest your savings at 10% per year = per 12 months
+        finaplan invest 0.1 --interval 12 | \   # invest your savings at 10% per year = per 12 months
         finaplan print | tail
-    Month 26 | 29994.149955678673
-    Month 27 | 31233.32751947085
-    Month 28 | 32482.386459173056
-    Month 29 | 33741.405570264425
-    Month 30 | 35010.46427655031
-    Month 31 | 36289.64263517264
-    Month 32 | 37579.02134166024
-    Month 33 | 38878.68173501941
-    Month 34 | 40188.70580286511
-    Month 35 | 41509.17618659305
+    Month 26 | 29994.15
+    Month 27 | 31233.33
+    Month 28 | 32482.39
+    Month 29 | 33741.41
+    Month 30 | 35010.46
+    Month 31 | 36289.64
+    Month 32 | 37579.02
+    Month 33 | 38878.68
+    Month 34 | 40188.71
+    Month 35 | 41509.18
 
 ## Development
 
