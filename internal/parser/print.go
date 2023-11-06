@@ -2,45 +2,68 @@ package parser
 
 import (
 	"fmt"
-	"strings"
+	"io"
+	"os"
 
 	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
 	"gopkg.in/yaml.v3"
 )
 
-func PrintPlan(p *finaplan.FinancialPlan) (string, error) {
-	var builder strings.Builder
-	err := printConfig(&builder, p.Config)
-	if err != nil {
-		return "", err
-	}
+const (
+	configDelimiter = "---"
+	newline         = byte('\n')
+)
 
-	for _, v := range p.Projection {
-		builder.WriteString(v.String())
-		builder.WriteRune('\n')
-	}
-	return builder.String(), nil
-}
-
-func PrintPlanToStdout(plan *finaplan.FinancialPlan) error {
-	planStr, err := PrintPlan(plan)
+func PrintPlan(w io.Writer, p *finaplan.FinancialPlan) error {
+	err := printConfig(w, p.Config)
 	if err != nil {
 		return err
 	}
-	fmt.Print(planStr)
+
+	for _, v := range p.Projection {
+		if _, err = io.WriteString(w, v.String()); err != nil {
+			return err
+		}
+
+		if err := writeNewline(w); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
-const ConfigDelimiter = "---\n"
+func PrintPlanToStdout(plan *finaplan.FinancialPlan) error {
+	return PrintPlan(os.Stdout, plan)
+}
 
-func printConfig(builder *strings.Builder, config *finaplan.PlanConfig) error {
+func printConfig(w io.Writer, config *finaplan.PlanConfig) error {
 	yamlConfig, err := yaml.Marshal(&config)
 	if err != nil {
 		return fmt.Errorf("unable to format config as YAML: %w", err)
 	}
 
-	builder.WriteString(ConfigDelimiter)
-	builder.Write(yamlConfig)
-	builder.WriteString(ConfigDelimiter)
+	if _, err = io.WriteString(w, configDelimiter); err != nil {
+		return err
+	}
+	if err := writeNewline(w); err != nil {
+		return err
+	}
+	if _, err = w.Write(yamlConfig); err != nil {
+		return err
+	}
+	if _, err = io.WriteString(w, configDelimiter); err != nil {
+		return err
+	}
+	if err := writeNewline(w); err != nil {
+		return err
+	}
+	return nil
+}
+
+func writeNewline(w io.Writer) error {
+	_, err := w.Write([]byte{newline})
+	if err != nil {
+		return err
+	}
 	return nil
 }

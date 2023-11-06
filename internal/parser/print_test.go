@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"bytes"
 	"testing"
 
 	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
@@ -23,11 +24,12 @@ interval_length: 2
 	intervalAmount := uint32(4)
 	plan := finaplan.Init(config, intervalAmount)
 
-	result, err := PrintPlan(plan)
+	var buf bytes.Buffer
+	err := PrintPlan(&buf, plan)
 	if err != nil {
 		t.Errorf("Got error: %s", err)
 	}
-	if result != expected {
-		t.Errorf("Got wrong output:\n%s", result)
+	if buf.String() != expected {
+		t.Errorf("Got wrong output:\n%s", buf.String())
 	}
 }

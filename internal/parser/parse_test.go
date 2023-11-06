@@ -1,18 +1,22 @@
 package parser
 
 import (
+	"bytes"
 	"fmt"
-	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
+	"strings"
 	"testing"
+
+	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
 )
 
 func TestParsePlanWithGeneratedInput(t *testing.T) {
 	initialPlan := finaplan.Init(finaplan.DefaultConfig(), 12)
-	output, err := PrintPlan(initialPlan)
+	var buf bytes.Buffer
+	err := PrintPlan(&buf, initialPlan)
 	if err != nil {
 		t.Errorf("Error printing plan: %s", err)
 	}
-	parsedPlan, err := ParsePlan(output)
+	parsedPlan, err := ParsePlan(&buf)
 	if err != nil {
 		t.Errorf("Error parsing plan: %s", err)
 	}
@@ -33,7 +37,7 @@ func TestParsePlanWithCorrectInput(t *testing.T) {
 	}
 	for i, input := range rightInputs {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			_, err := ParsePlan(input)
+			_, err := ParsePlan(strings.NewReader(input))
 			if err != nil {
 				t.Errorf("Got error with correct input: %s", err)
 			}
@@ -53,7 +57,7 @@ func TestParsePlanWithIncorrectInput(t *testing.T) {
 	}
 	for i, input := range incorrectInputs {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			result, err := ParsePlan(input)
+			result, err := ParsePlan(strings.NewReader(input))
 			if err == nil {
 				t.Errorf("Got no error with incorrect input. Parsed result: %v", *result)
 			}
