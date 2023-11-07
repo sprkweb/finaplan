@@ -27,6 +27,7 @@ Inspired by [Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy):
     init        Initialize an empty plan
     add         Add a certain amount of money to your plan
     invest      Add some interest rate on top of your capital
+    inflation   Adjust all the previous plan for inflation
     print       Print the given plan in a more human-friendly manner
 
 ## Usage
@@ -39,16 +40,16 @@ and you want to know how much money you will have in the end.
         finaplan invest 10% --interval 12 | \   # invest your savings at 10% per year = per 12 months
         finaplan inflation 4% --interval 12 | \ # adjust for inflation: 4% per year = per 12 monthw
         finaplan print | tail
-    Month 26 | 29994.15
-    Month 27 | 31233.33
-    Month 28 | 32482.39
-    Month 29 | 33741.41
-    Month 30 | 35010.46
-    Month 31 | 36289.64
-    Month 32 | 37579.02
-    Month 33 | 38878.68
-    Month 34 | 40188.71
-    Month 35 | 41509.18
+    Month 26 | 27550.60
+    Month 27 | 28595.21
+    Month 28 | 29641.72
+    Month 29 | 30690.17
+    Month 30 | 31740.56
+    Month 31 | 32792.91
+    Month 32 | 33847.24
+    Month 33 | 34903.57
+    Month 34 | 35961.92
+    Month 35 | 37022.31
 
 ## Development
 
