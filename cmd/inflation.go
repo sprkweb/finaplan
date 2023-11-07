@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/shopspring/decimal"
 	"github.com/spf13/cobra"
 	"github.com/sprkweb/finaplan-cli/finaplan/internal/parser"
 	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
@@ -17,7 +16,7 @@ Let's see how much your 300$ dollars would worth in 2 years with 4% inflation.
 In this example we represent a year as 2 intervals of 6 months.
 
 $ finaplan init --each 6 --months --intervals 5 | finaplan add 300 | \
-    finaplan inflation 0.04 --interval 2
+    finaplan inflation 4% --interval 2
 ---
 interval_type: months
 interval_length: 6
@@ -28,7 +27,7 @@ interval_length: 6
 282.8598102954577101
 277.3668639053254068`,
 	Run: parser.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
-		inflation, err := decimal.NewFromString(args[0])
+		inflation, err := parser.Percent(args[0])
 		if err != nil {
 			return err
 		}
