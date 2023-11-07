@@ -15,7 +15,7 @@ var investCmd = &cobra.Command{
 
 Let's say you want to invest your 300$ of savings and you expect 10% return per year.
 Calculation interval in the example is 6 months, that means your interest is 10% per 2 intervals (6 * 2 = 12 months = 1 year)
-$ finaplan init --each 6 --months | finaplan add 300 | \
+$ finaplan init --each 6 --months --intervals 5 | finaplan add 300 | \
     finaplan invest 0.1 --interval 2
 ---
 interval_type: months

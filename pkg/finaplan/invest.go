@@ -13,7 +13,7 @@ func (p *FinancialPlan) Invest(interest decimal.Decimal, intervals uint32, start
 		return nil
 	}
 	if intervals < 1 {
-		return errors.New("intervals must be greater than 1")
+		return errors.New("intervals must be equal or greater than 1")
 	}
 
 	newProjection := make(Projection, len(p.Projection))
