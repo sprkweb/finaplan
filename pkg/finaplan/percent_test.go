@@ -1,4 +1,4 @@
-package parser
+package finaplan
 
 import (
 	"reflect"
@@ -7,7 +7,7 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-func TestPercent(t *testing.T) {
+func Test_percent(t *testing.T) {
 	tests := []struct {
 		give    string
 		want    decimal.Decimal
@@ -49,7 +49,7 @@ func TestPercent(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.give, func(t *testing.T) {
-			got, err := Percent(tt.give)
+			got, err := percent("myparam", tt.give)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ParsePercent() error = %v, wantErr %v", err, tt.wantErr)
 				return

@@ -26,16 +26,7 @@ interval_length: 6
 346.1069198961501
 363`,
 	Run: parser.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
-		interest, err := parser.Percent(args[0])
-		if err != nil {
-			return err
-		}
-
-		err = plan.Invest(interest, InvestInterval, InvestStart, !InvestSimple)
-		if err != nil {
-			return err
-		}
-		return nil
+		return plan.Invest(args[0], InvestInterval, InvestStart, !InvestSimple)
 	}),
 }
 

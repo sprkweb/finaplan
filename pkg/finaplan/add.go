@@ -9,10 +9,14 @@ import (
 // regularly (`each` N intervals) or once (`each` 0 intervals)
 //
 // starting after `start` intervals
-func (p FinancialPlan) Add(amount decimal.Decimal, each uint32, start uint32) {
+func (p FinancialPlan) Add(amount string, each uint32, start uint32) error {
+	amountDecimal, err := decimal.NewFromString(amount)
+	if err != nil {
+		return NewErrDecodeDecimal("amount", err)
+	}
 	var maxIndex int = len(p.Projection) - 1
 	if int(start) > maxIndex {
-		return
+		return nil
 	}
 
 	if each >= 1 {
@@ -20,12 +24,13 @@ func (p FinancialPlan) Add(amount decimal.Decimal, each uint32, start uint32) {
 			// intervalsPassed = 1 + (i - start) / each
 			intervalsPassed := decimal.NewFromInt(1 + int64((i-start)/each))
 			// projection += amount * intervalsPassed
-			p.Projection[i] = p.Projection[i].Add(amount.Mul(intervalsPassed))
+			p.Projection[i] = p.Projection[i].Add(amountDecimal.Mul(intervalsPassed))
 		}
 	} else {
 		for i := start; i <= uint32(maxIndex); i++ {
 			// projection += amount
-			p.Projection[i] = p.Projection[i].Add(amount)
+			p.Projection[i] = p.Projection[i].Add(amountDecimal)
 		}
 	}
+	return nil
 }

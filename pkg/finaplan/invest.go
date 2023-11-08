@@ -1,28 +1,31 @@
 package finaplan
 
 import (
-	"errors"
 	"math"
 
 	"github.com/shopspring/decimal"
 )
 
 // Invest your capital with given `interest` per `intervals` starting after `start` intervals.
-func (p *FinancialPlan) Invest(interest decimal.Decimal, intervals uint32, start uint32, compound bool) error {
-	if int(start) > len(p.Projection)-1 {
-		return nil
+func (p *FinancialPlan) Invest(interest string, intervals uint32, start uint32, compound bool) error {
+	interestDecimal, err := percent("interest", interest)
+	if err != nil {
+		return err
 	}
 	if intervals < 1 {
-		return errors.New("intervals must be equal or greater than 1")
+		return ErrIntervalsLessThanOne
+	}
+	if int(start) > len(p.Projection)-1 {
+		return nil
 	}
 
 	newProjection := make(Projection, len(p.Projection))
 	copy(newProjection, p.Projection)
 
 	if compound {
-		p.calculateCompoundInterest(newProjection, interest, intervals, start)
+		p.calculateCompoundInterest(newProjection, interestDecimal, intervals, start)
 	} else {
-		p.calculateSimpleInterest(newProjection, interest, intervals, start)
+		p.calculateSimpleInterest(newProjection, interestDecimal, intervals, start)
 	}
 	p.Projection = newProjection
 	return nil

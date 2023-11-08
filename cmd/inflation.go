@@ -27,16 +27,7 @@ interval_length: 6
 282.8598102954577101
 277.3668639053254068`,
 	Run: parser.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
-		inflation, err := parser.Percent(args[0])
-		if err != nil {
-			return err
-		}
-
-		err = plan.Inflation(inflation, InflationInterval)
-		if err != nil {
-			return err
-		}
-		return nil
+		return plan.Inflation(args[0], InflationInterval)
 	}),
 }
 

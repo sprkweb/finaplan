@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/shopspring/decimal"
 	"github.com/spf13/cobra"
 	"github.com/sprkweb/finaplan/internal/parser"
 	"github.com/sprkweb/finaplan/pkg/finaplan"
@@ -26,13 +25,7 @@ interval_length: 1
 900`,
 	Args: cobra.ExactArgs(1),
 	Run: parser.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
-		amount, err := decimal.NewFromString(args[0])
-		if err != nil {
-			return err
-		}
-
-		plan.Add(amount, AddEach, AddStart)
-		return nil
+		return plan.Add(args[0], AddEach, AddStart)
 	}),
 }
 
