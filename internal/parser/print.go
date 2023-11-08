@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
+	"github.com/sprkweb/finaplan/pkg/finaplan"
 	"gopkg.in/yaml.v3"
 )
 

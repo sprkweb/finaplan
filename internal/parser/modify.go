@@ -2,7 +2,7 @@ package parser
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
+	"github.com/sprkweb/finaplan/pkg/finaplan"
 )
 
 type WrappedFunc func(plan *finaplan.FinancialPlan, args []string) error

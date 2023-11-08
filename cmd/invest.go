@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/sprkweb/finaplan-cli/finaplan/internal/parser"
-	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
+	"github.com/sprkweb/finaplan/internal/parser"
+	"github.com/sprkweb/finaplan/pkg/finaplan"
 )
 
 // investCmd represents the invest command

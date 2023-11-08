@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/sprkweb/finaplan-cli/finaplan/cmd"
+	"github.com/sprkweb/finaplan/cmd"
 )
 
 func main() {

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/sprkweb/finaplan-cli/finaplan/internal/parser"
+	"github.com/sprkweb/finaplan/internal/parser"
 
 	"github.com/spf13/cobra"
 )

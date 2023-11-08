@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sprkweb/finaplan-cli/finaplan/pkg/finaplan"
+	"github.com/sprkweb/finaplan/pkg/finaplan"
 )
 
 func TestParsePlanWithGeneratedInput(t *testing.T) {

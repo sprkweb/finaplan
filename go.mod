@@ -1,4 +1,4 @@
-module github.com/sprkweb/finaplan-cli/finaplan
+module github.com/sprkweb/finaplan
 
 go 1.18
 
