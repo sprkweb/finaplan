@@ -2,7 +2,7 @@
     <img src="https://raw.githubusercontent.com/sprkweb/finaplan-cli/master/icon.svg" alt="Logo" width="150" height="150" />
 </p>
 
-<h1 align="center">FinaPlan CLI</h1>
+<h1 align="center">FinaPlan</h1>
 
 Financial planning using modules.
 
@@ -14,9 +14,7 @@ Inspired by [Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy):
 
 ## Installation
 
-    git clone https://github.com/sprkweb/finaplan-cli.git
-    cd finaplan-cli
-    make install
+    go install github.com/sprkweb/finaplan@v0.0.3
 
 ## Available modules
 
