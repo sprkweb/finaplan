@@ -14,13 +14,13 @@ var printCmd = &cobra.Command{
 
 Example:
 $ finaplan init --intervals 5 --months | \
-    finaplan main.go add 10000 --each 1 | |
-        finaplan print --graph --no-color
-Month 0 $$$$$$$$$$$$ 10000
-Month 1 $$$$$$$$$$$$$$$$$$$$$$$$$ 20000
-Month 2 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 30000
-Month 3 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 40000
-Month 4 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 50000
+    finaplan add 10000 --each 1 | \
+        finaplan print
+Month 0         | 10000.00
+Month 1         | 20000.00
+Month 2         | 30000.00
+Month 3         | 40000.00
+Month 4         | 50000.00
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		plan, err := parser.ParsePlanFromStdin()
@@ -28,7 +28,7 @@ Month 4 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 50000
 			panic(err)
 		}
 
-		if err := parser.PrettyPrintPlanToStdout(plan, PrintGraph, !PrintNoColor); err != nil {
+		if err := parser.PrettyPrintPlanToStdout(plan); err != nil {
 			panic(err)
 		}
 	},
@@ -39,6 +39,4 @@ var PrintNoColor bool
 
 func init() {
 	rootCmd.AddCommand(printCmd)
-	printCmd.Flags().BoolVar(&PrintGraph, "graph", false, "Set this flag if you want a bar chart")
-	printCmd.Flags().BoolVar(&PrintNoColor, "no-color", false, "Set this flag if you want it to be printed without colors")
 }
