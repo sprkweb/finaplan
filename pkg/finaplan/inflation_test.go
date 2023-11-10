@@ -3,7 +3,6 @@ package finaplan
 import (
 	"testing"
 
-	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -34,7 +33,7 @@ func TestFinancialPlan_Inflation(t *testing.T) {
 			name: "static sum with 300%",
 			init: func() *FinancialPlan {
 				plan := Init(DefaultConfig(), 7)
-				plan.Add("640", 0, 0)
+				_ = plan.Add("640", 0, 0)
 				return plan
 			},
 			inflation: "3", // 300%
@@ -46,7 +45,7 @@ func TestFinancialPlan_Inflation(t *testing.T) {
 			name: "static sum with 33.1%",
 			init: func() *FinancialPlan {
 				plan := Init(DefaultConfig(), 7)
-				plan.Add("2679.61179333", 0, 0)
+				_ = plan.Add("2679.61179333", 0, 0)
 				return plan
 			},
 			inflation: "0.331", // 33.1%
@@ -58,7 +57,7 @@ func TestFinancialPlan_Inflation(t *testing.T) {
 			name: "periodic replenishment",
 			init: func() *FinancialPlan {
 				plan := Init(DefaultConfig(), 7)
-				plan.Add("640", 2, 2)
+				_ = plan.Add("640", 2, 2)
 				return plan
 			},
 			inflation: "1", // 100%
@@ -70,8 +69,8 @@ func TestFinancialPlan_Inflation(t *testing.T) {
 			name: "same percent with investements",
 			init: func() *FinancialPlan {
 				plan := Init(DefaultConfig(), 7)
-				plan.Add("300", 0, 0)
-				plan.Invest("0.5", 1, 1, true)
+				_ = plan.Add("300", 0, 0)
+				_ = plan.Invest("0.5", 1, 1, true)
 				return plan
 			},
 			inflation: "0.5", // 21%
@@ -83,8 +82,8 @@ func TestFinancialPlan_Inflation(t *testing.T) {
 			name: "lower percent with investements",
 			init: func() *FinancialPlan {
 				plan := Init(DefaultConfig(), 7)
-				plan.Add("300", 0, 0)
-				plan.Invest("0.21", 1, 0, true)
+				_ = plan.Add("300", 0, 0)
+				_ = plan.Invest("0.21", 1, 0, true)
 				return plan
 			},
 			inflation: "0.1", // 10%
@@ -96,7 +95,7 @@ func TestFinancialPlan_Inflation(t *testing.T) {
 			name: "deflation",
 			init: func() *FinancialPlan {
 				plan := Init(DefaultConfig(), 7)
-				plan.Add("300", 0, 0)
+				_ = plan.Add("300", 0, 0)
 				return plan
 			},
 			inflation: "-0.01", // -1%
@@ -108,7 +107,7 @@ func TestFinancialPlan_Inflation(t *testing.T) {
 			name: "zero inflation",
 			init: func() *FinancialPlan {
 				plan := Init(DefaultConfig(), 7)
-				plan.Add("300", 0, 0)
+				_ = plan.Add("300", 0, 0)
 				return plan
 			},
 			inflation: "0", // 0%
@@ -120,11 +119,12 @@ func TestFinancialPlan_Inflation(t *testing.T) {
 			name: "per 0 intervals",
 			init: func() *FinancialPlan {
 				plan := Init(DefaultConfig(), 7)
-				plan.Add("300", 0, 0)
+				_ = plan.Add("300", 0, 0)
 				return plan
 			},
 			inflation: "-0.01", // -1%
 			intervals: 0,
+			want:      []string{"300", "300", "300", "300", "300", "300", "300"},
 			wantErr:   assert.Error,
 		},
 	}
@@ -132,15 +132,7 @@ func TestFinancialPlan_Inflation(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			plan := tt.init()
 			tt.wantErr(t, plan.Inflation(tt.inflation, tt.intervals))
-			if len(plan.Projection) != len(tt.want) {
-				t.Errorf("Got slice of unexpected length. Expected %d, got %d", len(tt.want), len(plan.Projection))
-				return
-			}
-			for i, amount := range plan.Projection {
-				if !amount.Equal(decimal.RequireFromString(tt.want[i])) {
-					t.Errorf("Element №%d = %v does not match the expected value (%v)", i, amount, tt.want[i])
-				}
-			}
+			assert.Equal(t, tt.want, plan.Print())
 		})
 	}
 }

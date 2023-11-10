@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/sprkweb/finaplan/pkg/finaplan"
 	"gopkg.in/yaml.v3"
@@ -20,14 +21,9 @@ func PrintPlan(w io.Writer, p *finaplan.FinancialPlan) error {
 		return err
 	}
 
-	for _, v := range p.Projection {
-		if _, err = io.WriteString(w, v.String()); err != nil {
-			return err
-		}
-
-		if err := writeNewline(w); err != nil {
-			return err
-		}
+	projection := strings.Join(p.Print(), "\n")
+	if _, err = io.WriteString(w, projection); err != nil {
+		return err
 	}
 	return nil
 }
