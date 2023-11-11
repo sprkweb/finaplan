@@ -1,4 +1,4 @@
-package parser
+package finaplanio
 
 import (
 	"fmt"
@@ -15,16 +15,12 @@ func PrettyPrint(w io.Writer, plan *finaplan.FinancialPlan) error {
 		return nil
 	}
 
-	unit, err := finaplan.GetIntervalUnit(plan.Config.IntervalType)
-	if err != nil {
-		return err
-	}
-	// capitalize
-	unit = strings.ToUpper(unit[:1]) + unit[1:]
+	unit := plan.Config.IntervalType.GetIntervalUnit()
+	unit = strings.ToUpper(unit[:1]) + unit[1:] // capitalize
 
 	for i, v := range projection {
 		interval := uint64(plan.Config.IntervalLength) * uint64(i)
-		fmt.Fprintf(w, "%s %d \t| %s\n", unit, interval, v)
+		fmt.Fprintf(w, "%s %d  \t| %s\n", unit, interval, v)
 	}
 
 	return nil

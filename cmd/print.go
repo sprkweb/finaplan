@@ -1,9 +1,8 @@
 package cmd
 
 import (
-	"github.com/sprkweb/finaplan/internal/parser"
-
 	"github.com/spf13/cobra"
+	"github.com/sprkweb/finaplan/internal/finaplanio"
 )
 
 // printCmd represents the print command
@@ -23,12 +22,12 @@ Month 3         | 40000.00
 Month 4         | 50000.00
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		plan, err := parser.ParsePlanFromStdin()
+		plan, err := finaplanio.ParsePlanFromStdin()
 		if err != nil {
 			panic(err)
 		}
 
-		if err := parser.PrettyPrintPlanToStdout(plan); err != nil {
+		if err := finaplanio.PrettyPrintPlanToStdout(plan); err != nil {
 			panic(err)
 		}
 	},

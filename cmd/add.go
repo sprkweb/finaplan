@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/sprkweb/finaplan/internal/parser"
+	"github.com/sprkweb/finaplan/internal/finaplanio"
 	"github.com/sprkweb/finaplan/pkg/finaplan"
 )
 
@@ -13,18 +13,15 @@ var addCmd = &cobra.Command{
 	Long: `Add a certain amount of money to your financial plan (e.g. savings) once or regularly
 
 Example:
-$ finaplan init | finaplan add 300 --each 2
----
-interval_type: days
-interval_length: 1
----
-300
-300
-600
-600
-900`,
+$ finaplan init --intervals 5 | finaplan add 300 --each 2 | finaplan print
+Month 0         | 300.00
+Month 1         | 300.00
+Month 2         | 600.00
+Month 3         | 600.00
+Month 4         | 900.00
+`,
 	Args: cobra.ExactArgs(1),
-	Run: parser.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
+	Run: finaplanio.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
 		return plan.Add(args[0], AddEach, AddStart)
 	}),
 }

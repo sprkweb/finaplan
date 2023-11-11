@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/sprkweb/finaplan/internal/parser"
+	"github.com/sprkweb/finaplan/internal/finaplanio"
 	"github.com/sprkweb/finaplan/pkg/finaplan"
 )
 
@@ -15,17 +15,14 @@ var investCmd = &cobra.Command{
 Let's say you want to invest your 300$ of savings and you expect 10% return per year.
 Calculation interval in the example is 6 months, that means your interest is 10% per 2 intervals (6 * 2 = 12 months = 1 year)
 $ finaplan init --each 6 --months --intervals 5 | finaplan add 300 | \
-    finaplan invest 10% --interval 2
----
-interval_type: months
-interval_length: 6
----
-300
-314.6426544510455
-330
-346.1069198961501
-363`,
-	Run: parser.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
+    finaplan invest 10% --interval 2 | finaplan print
+Month 0         | 300.00
+Month 6         | 314.64
+Month 12        | 330.00
+Month 18        | 346.11
+Month 24        | 363.00
+`,
+	Run: finaplanio.ModifyPlan(func(plan *finaplan.FinancialPlan, args []string) error {
 		return plan.Invest(args[0], InvestInterval, InvestStart, !InvestSimple)
 	}),
 }

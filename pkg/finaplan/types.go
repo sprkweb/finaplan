@@ -41,21 +41,35 @@ const (
 	Years  IntervalType = "years"
 )
 
+// String returns the name of the given unit (multiple form, lower case)
+func (t IntervalType) String() string {
+	return string(t)
+}
+
 // GetIntervalUnit gets the name of the given unit (singular form, lower case).
-//
-// Error is returned if the given IntervalType does not exist.
-func GetIntervalUnit(t IntervalType) (string, error) {
+func (t IntervalType) GetIntervalUnit() string {
 	switch t {
 	case Days:
-		return "day", nil
+		return "day"
 	case Weeks:
-		return "week", nil
+		return "week"
 	case Months:
-		return "month", nil
+		return "month"
 	case Years:
-		return "year", nil
+		return "year"
+	}
+	return ""
+}
+
+func (t IntervalType) Validate() error {
+	switch t {
+	case Days,
+		Weeks,
+		Months,
+		Years:
+		return nil
 	default:
-		return "", fmt.Errorf("wrong interval type: %s", t)
+		return fmt.Errorf("wrong interval type: %q", t)
 	}
 }
 
@@ -68,16 +82,12 @@ func DefaultConfig() *PlanConfig {
 
 // Validate PlanConfig. If it is valid, nil is returned
 func (c *PlanConfig) Validate() error {
+	var errs []error
 	if c.IntervalLength < 1 {
-		return errors.New("IntervalLength must be 1 or bigger")
+		errs = append(errs, errors.New("IntervalLength must be 1 or bigger"))
 	}
-	switch c.IntervalType {
-	case Days:
-	case Weeks:
-	case Months:
-	case Years:
-	default:
-		return fmt.Errorf("incorrect IntervalType: %s", c.IntervalType)
+	if err := c.IntervalType.Validate(); err != nil {
+		errs = append(errs, fmt.Errorf("invalid IntervalType: %w", err))
 	}
-	return nil
+	return errors.Join(errs...)
 }

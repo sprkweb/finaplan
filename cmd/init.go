@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/sprkweb/finaplan/internal/parser"
+	"github.com/sprkweb/finaplan/internal/finaplanio"
 	"github.com/sprkweb/finaplan/pkg/finaplan"
 )
 
@@ -18,22 +18,18 @@ Example:
 Initialize an empty plan for 5 * 3 = 15 weeks ahead
 with the calculation interval of 3 weeks:
 $ finaplan init --each 3 --weeks --intervals 5
----
-interval_type: weeks
-interval_length: 3
----
-0
-0
-0
-0
-0
+Week 0          | 0.00
+Week 3          | 0.00
+Week 6          | 0.00
+Week 9          | 0.00
+Week 12         | 0.00
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		newPlan := finaplan.Init(&finaplan.PlanConfig{
 			IntervalType:   IntervalType(),
 			IntervalLength: IntervalLength,
 		}, IntervalAmount)
-		if err := parser.PrintPlanToStdout(newPlan); err != nil {
+		if err := finaplanio.PrintPlanToStdout(newPlan); err != nil {
 			panic(err)
 		}
 	},

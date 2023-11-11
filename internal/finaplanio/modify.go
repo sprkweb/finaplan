@@ -1,4 +1,4 @@
-package parser
+package finaplanio
 
 import (
 	"github.com/spf13/cobra"
