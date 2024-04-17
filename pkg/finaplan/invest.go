@@ -1,8 +1,6 @@
 package finaplan
 
 import (
-	"math"
-
 	"github.com/shopspring/decimal"
 )
 
@@ -47,12 +45,10 @@ func (p *FinancialPlan) calculateSimpleInterest(newProjection Projection, intere
 
 func (p *FinancialPlan) calculateCompoundInterest(newProjection Projection, interest decimal.Decimal, intervals uint32, start uint32) {
 	// interestPerInterval := (interest + 1) ^ (1 / intervals)
-	// decimal package does not support neither root nor power to non-integer numbers
-	// so we have to convert to float64 and use standard pow function here
 	one := decimal.NewFromInt(1)
-	interestBase := interest.Add(one).InexactFloat64()
-	interestExpontent := one.Div(decimal.NewFromInt(int64(intervals))).InexactFloat64()
-	interestPerInterval := decimal.NewFromFloat(math.Pow(interestBase, interestExpontent))
+	interestBase := interest.Add(one)
+	interestExpontent := one.Div(decimal.NewFromInt(int64(intervals)))
+	interestPerInterval := interestBase.Pow(interestExpontent)
 
 	for i := start + 1; i <= uint32(len(p.Projection)-1); i++ {
 		newProjection[i] = newProjection[i-1].Mul(interestPerInterval).Add(p.Projection[i]).Sub(p.Projection[i-1])

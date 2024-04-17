@@ -1,8 +1,6 @@
 package finaplan
 
 import (
-	"math"
-
 	"github.com/shopspring/decimal"
 )
 
@@ -24,12 +22,10 @@ func (p *FinancialPlan) Inflation(inflation string, intervals uint32) error {
 	}
 
 	// inflationPerInterval := (inflation + 1) ^ (1 / intervals)
-	// decimal package does not support neither root nor power to non-integer numbers
-	// so we have to convert to float64 and use standard pow function here
 	one := decimal.NewFromInt(1)
-	base := inflationDecimal.Add(one).InexactFloat64()
-	expontent := one.Div(decimal.NewFromInt(int64(intervals))).InexactFloat64()
-	inflationPerInterval := decimal.NewFromFloat(math.Pow(base, expontent))
+	base := inflationDecimal.Add(one)
+	expontent := one.Div(decimal.NewFromInt(int64(intervals)))
+	inflationPerInterval := base.Pow(expontent)
 
 	for i := 0; i < len(p.Projection); i++ {
 		inflationSoFar := inflationPerInterval.Pow(decimal.NewFromInt(int64(i)))
